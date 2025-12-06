@@ -220,7 +220,7 @@ class XiaomiUnlockTool:
         self.save_data(self.auth_info)
         
         print(f"\n{cg}DONE！登录成功!{cres}")
-        print(f"{cg}账户信息:{cres}\nID: {userId}\n服务器: {self.current_host}")
+        print(f"{cg}账户信息:{cres}\nID: {userId}")
         
         return True
     
@@ -301,7 +301,6 @@ class XiaomiUnlockTool:
         return self.request_unlock_service(passToken, userId, deviceId)
     
     def authenticate_with_passtoken(self):
-        """使用passtoken进行认证"""
         print(f"\n{cy}使用passtoken登录{cres}")
         
         print(f"{cb}步骤1: 获取passtoken{cres}")
@@ -482,7 +481,7 @@ class XiaomiUnlockTool:
         return result
     
     def request_unlock(self, product, token):
-        print(f"\n{cy}请求解锁码 (v3)...{cres}")
+        print(f"\n{cy}请求解锁码...{cres}")
         
         device_id = f"wb_{uuid.uuid4()}"
         pc_id = hashlib.md5(device_id.encode()).hexdigest()
