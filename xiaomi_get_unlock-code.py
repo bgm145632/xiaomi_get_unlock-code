@@ -66,7 +66,7 @@ class XiaomiUnlockTool:
             
             if data and data.get("login") == "ok":
                 print(f"\n{cy}检测到已保存的账户: {data.get('userid', 'Unknown')}{cres}")
-                choice = input(f"{cg}是否使用此账户? (y/N): {cres}").strip().lower()
+                choice = input(f"{cg}是否使用此账户? (Y/N): {cres}").strip().lower()
                 
                 if choice == 'y':
                     if data.get("full_token"):
@@ -77,7 +77,7 @@ class XiaomiUnlockTool:
                         print(f"{cr}保存的登录信息不完整{cres}")
                         os.remove(self.datafile)
                         return False
-                elif choice == '删除':
+                elif choice == 'n':
                     print(f"{cy}删除保存的登录信息...{cres}")
                     os.remove(self.datafile)
                     return False
