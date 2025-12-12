@@ -66,7 +66,7 @@ class XiaomiUnlockTool:
             
             if data and data.get("login") == "ok":
                 print(f"\n{cy}检测到已保存的账户: {data.get('userid', 'Unknown')}{cres}")
-                choice = input(f"{cg}是否使用此账户? (Y/N): {cres}").strip().lower()
+                choice = input(f"{cg}是否使用此账户? (y/N): {cres}").strip().lower()
                 
                 if choice == 'y':
                     if data.get("full_token"):
@@ -77,7 +77,7 @@ class XiaomiUnlockTool:
                         print(f"{cr}保存的登录信息不完整{cres}")
                         os.remove(self.datafile)
                         return False
-                elif choice == 'n':
+                elif choice == '删除':
                     print(f"{cy}删除保存的登录信息...{cres}")
                     os.remove(self.datafile)
                     return False
@@ -301,6 +301,7 @@ class XiaomiUnlockTool:
         return self.request_unlock_service(passToken, userId, deviceId)
     
     def authenticate_with_passtoken(self):
+        """使用passtoken进行认证"""
         print(f"\n{cy}使用passtoken登录{cres}")
         
         print(f"{cb}步骤1: 获取passtoken{cres}")
@@ -480,7 +481,7 @@ class XiaomiUnlockTool:
         
         return result
     
-    def request_unlock(self, product, token):
+    def request_unlock(self, product, token, userId):
         print(f"\n{cy}请求解锁码...{cres}")
         
         device_id = f"wb_{uuid.uuid4()}"
@@ -494,15 +495,16 @@ class XiaomiUnlockTool:
                 "language": "en",
                 "operate": "unlock",
                 "pcId": pc_id,
+                "uid": userId,
                 "product": product,
                 "region": "",
                 "deviceInfo": {
                     "boardVersion": "",
                     "product": product,
-                    "deviceToken": token
                     "socId": "",
                     "deviceName": ""
                 },
+                "deviceToken": token
             }
         }
         
@@ -517,7 +519,6 @@ class XiaomiUnlockTool:
     def run(self):
         print(f"{cg}{'='*70}{cres}")
         print(f"{cb}                小米解锁码获取工具 {cres}")
-        print(f"                                         {cres}")
         print(f"{cb}项目                https://github.com/bgm145632/xiaomi_get_unlock-code{cres}")
         print(f"                                         {cres}")
         print(f"{cb}作者                          BEICHEN，bgm145632{cres}")
@@ -558,7 +559,7 @@ class XiaomiUnlockTool:
                 print(f"{cr}解锁请求失败 - 无响应{cres}")
                 return
                 
-            print(f"\n{cy}服务器响应:{cres}")
+            print(f"\n{cy}📨 服务器响应:{cres}")
             print(json.dumps(result, indent=2, ensure_ascii=False))
             
             if "code" in result and result["code"] == 0:
@@ -576,7 +577,7 @@ class XiaomiUnlockTool:
                     else:
                         print(f"{cr}token.bin文件生成失败{cres}")
                     
-                    print(f"\n{cy}请使用此解锁文件在fastboot模式下解锁设备{cres}")
+                    print(f"\n{cy}请使用此解锁码在fastboot模式下解锁设备{cres}")
                 else:
                     print(f"{cr}响应中缺少有效的解锁数据{cres}")
                     
