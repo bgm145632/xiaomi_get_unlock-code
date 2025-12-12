@@ -499,10 +499,10 @@ class XiaomiUnlockTool:
                 "deviceInfo": {
                     "boardVersion": "",
                     "product": product,
+                    "deviceToken": token
                     "socId": "",
                     "deviceName": ""
                 },
-                "deviceToken": token
             }
         }
         
@@ -558,7 +558,7 @@ class XiaomiUnlockTool:
                 print(f"{cr}解锁请求失败 - 无响应{cres}")
                 return
                 
-            print(f"\n{cy}📨 服务器响应:{cres}")
+            print(f"\n{cy}服务器响应:{cres}")
             print(json.dumps(result, indent=2, ensure_ascii=False))
             
             if "code" in result and result["code"] == 0:
@@ -576,7 +576,7 @@ class XiaomiUnlockTool:
                     else:
                         print(f"{cr}token.bin文件生成失败{cres}")
                     
-                    print(f"\n{cy}请使用此解锁码在fastboot模式下解锁设备{cres}")
+                    print(f"\n{cy}请使用此解锁文件在fastboot模式下解锁设备{cres}")
                 else:
                     print(f"{cr}响应中缺少有效的解锁数据{cres}")
                     
