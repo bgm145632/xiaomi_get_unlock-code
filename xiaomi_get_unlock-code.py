@@ -495,7 +495,7 @@ class XiaomiUnlockTool:
                 "operate": "unlock",
                 "pcId": pc_id,
                 "product": product,
-                "region": "",
+                "region": "china",
                 "deviceInfo": {
                     "boardVersion": "",
                     "product": product,
@@ -518,8 +518,11 @@ class XiaomiUnlockTool:
         print(f"{cg}{'='*70}{cres}")
         print(f"{cb}                小米解锁码获取工具 {cres}")
         print(f"                                         {cres}")
+        print(f"{cb}项目                https://github.com/bgm145632/xiaomi_get_unlock-code{cres}")
+        print(f"                                         {cres}")
         print(f"{cb}作者                          BEICHEN，bgm145632{cres}")
-        print(f"{cb}参考项目                   termux-miunlock{cres}")
+        print(f"{cb}参考项目                       termux-miunlock{cres}")
+        print(f"                                         {cres}")
         print(f"{cb}风破浪会有时 直挂云帆济沧海{cres}")
         print(f"{cg}{'='*70}{cres}")
         
