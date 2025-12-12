@@ -495,7 +495,7 @@ class XiaomiUnlockTool:
                 "operate": "unlock",
                 "pcId": pc_id,
                 "product": product,
-                "region": "china",
+                "region": "",
                 "deviceInfo": {
                     "boardVersion": "",
                     "product": product,
