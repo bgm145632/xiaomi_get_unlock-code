@@ -481,9 +481,9 @@ class XiaomiUnlockTool:
         
         return result
     
-    def request_unlock(self, product, token, userId):
+    def request_unlock(self, product, token,):
         print(f"\n{cy}请求解锁码...{cres}")
-
+        
         userId = self.auth_info.get("userid")
         
         device_id = f"wb_{uuid.uuid4()}"
@@ -509,7 +509,7 @@ class XiaomiUnlockTool:
                 "deviceToken": token
             }
         }
-        
+
         result = self.RetrieveEncryptData(
             self,
             "/api/v3/ahaUnlock",
