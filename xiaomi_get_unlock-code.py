@@ -498,7 +498,6 @@ class XiaomiUnlockTool:
                 "operate": "unlock",
                 "pcId": pc_id,
                 "uid": userId,
-                "uid": userId,
                 "product": product,
                 "region": "",
                 "deviceInfo": {
