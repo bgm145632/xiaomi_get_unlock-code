@@ -483,6 +483,8 @@ class XiaomiUnlockTool:
     
     def request_unlock(self, product, token, userId):
         print(f"\n{cy}请求解锁码...{cres}")
+
+        userId = self.auth_info.get("userid")
         
         device_id = f"wb_{uuid.uuid4()}"
         pc_id = hashlib.md5(device_id.encode()).hexdigest()
@@ -495,6 +497,7 @@ class XiaomiUnlockTool:
                 "language": "en",
                 "operate": "unlock",
                 "pcId": pc_id,
+                "uid": userId,
                 "uid": userId,
                 "product": product,
                 "region": "",
