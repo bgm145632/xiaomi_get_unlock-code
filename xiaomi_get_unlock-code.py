@@ -472,7 +472,7 @@ class XiaomiUnlockTool:
             if cleanOrNot == 1:
                 print(f"{cr}解锁此设备将清除用户数据{cres}")
             elif cleanOrNot == -1:
-                print(f"{cg}Never Gonna Give You Up{cres}")
+                print(f"{cr}未锁定的设备容易遭到恶意软件的攻击的目标，这可能损坏设备或造成相关损失！！！{cres}")
             
             if 'notice' in result:
                 print(f"{cb}提示: {result['notice']}{cres}")
@@ -561,7 +561,7 @@ class XiaomiUnlockTool:
                 print(f"{cr}解锁请求失败 - 无响应{cres}")
                 return
                 
-            print(f"\n{cy}📨 服务器响应:{cres}")
+            print(f"\n{cy}服务器响应:{cres}")
             print(json.dumps(result, indent=2, ensure_ascii=False))
             
             if "code" in result and result["code"] == 0:
