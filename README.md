@@ -27,7 +27,7 @@
 
 解锁文件使用：
 1 - fastboot stage <文件>
-2 - fastboot oem unlock(先拿到当前fastboot token提交后的的解锁文件在执行！不然提示token验证失败)
+2 - fastboot oem unlock(先拿到当前fastboot token提交后的的解锁文件在执行！不然提示token验证失败，重启设备)
 
 ## 作者:
 [BEICHEN](https://space.bilibili.com/9784369)
