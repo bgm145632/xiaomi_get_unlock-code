@@ -16,6 +16,19 @@
 2 - 获取登录token app(来自RohitVerma882):
 [mi_account](https://www.123865.com/s/Q0TTjv-DEE13)
 
+3 - 提交/使用过程:
+使用fastboot工具!!!!
+
+获取代号：fastboot getvar product
+
+获取token：fastboot getvar token(高通)/fastboot oem get_token(联发科)
+如果是联发科返回多少行token就合并多少，然后粘贴到命令行里
+按两次回车继续提交就可看见返回的数据！
+
+解锁文件使用：
+1 - fastboot stage <文件>
+2 - fastboot oem unlock(先拿到当前fastboot token提交后的的解锁文件在执行！不然提示token验证失败)
+
 ## 作者:
 [BEICHEN](https://space.bilibili.com/9784369)
 
