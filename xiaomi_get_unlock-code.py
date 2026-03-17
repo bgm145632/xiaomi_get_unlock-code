@@ -494,19 +494,18 @@ class XiaomiUnlockTool:
             "data": {
                 "clientId": "2",
                 "clientVersion": "7.6.727.43",
-                "language": "en",
-                "operate": "unlock",
-                "pcId": pc_id,
-                "uid": userId,
-                "product": product,
-                "region": "",
                 "deviceInfo": {
                     "boardVersion": "",
                     "product": product,
                     "socId": "",
                     "deviceName": ""
                 },
-                "deviceToken": token
+                "deviceToken": token,
+                "language": "zh",
+                "operate": "unlock",
+                "pcId": pc_id,
+                "region": "CN",
+                "uid": userId
             }
         }
 
