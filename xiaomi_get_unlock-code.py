@@ -136,7 +136,7 @@ class XiaomiUnlockTool:
         return self.request_unlock_service(passToken, userId, deviceId)
     
     def request_unlock_service(self, passToken, userId, deviceId):
-        print(f"{cy}请求解锁服务信息...{cres}")
+        print(f"{cy}开始请求登录信息...{cres}")
         
         unlock_response = self.session.get(
             "https://account.xiaomi.com/pass/serviceLogin?sid=unlockApi&_json=true&passive=true&hidden=true",
@@ -151,13 +151,12 @@ class XiaomiUnlockTool:
         try:
             unlock_data = json.loads(unlock_response.text.replace("&&&START&&&", ""))
         except:
-            print(f"{cr}解析解锁服务响应失败{cres}")
+            print(f"{cr}解析登录服务响应失败{cres}")
             return False
         
-        print(f"{cy}解锁服务响应: {cb}{json.dumps(unlock_data, indent=2, ensure_ascii=False)}{cres}")
         if unlock_data.get("code") != 0:
             error_msg = unlock_data.get("desc", "未知错误")
-            print(f"{cr}解锁服务返回错误: {error_msg}{cres}")
+            print(f"{cr}登录服务返回错误: {error_msg}{cres}")
             return False
         
         if "ssecurity" not in unlock_data:
@@ -181,16 +180,12 @@ class XiaomiUnlockTool:
         self.ssecurity = unlock_data["ssecurity"]
         self.nonce = nonce
         
-        print(f"{cy}获取到的认证参数:{cres}")
-        print(f"  ssecurity: {self.ssecurity[:20]}...")
-        print(f"  nonce: {self.nonce}")
-        print(f"  location: {location_url[:50]}...")
         
         # 完成认证
         return self.complete_authentication(location_url, userId, passToken)
     
     def complete_authentication(self, location_url, userId, passToken):
-        print(f"{cy}完成认证流程...{cres}")
+        print(f"{cy}正在完成认证流程...{cres}")
         
         client_sign = urllib.parse.quote_plus(
             b64encode(
@@ -206,7 +201,7 @@ class XiaomiUnlockTool:
         self.cookies = {cookie.name: cookie.value for cookie in response.cookies}
         
         if 'serviceToken' not in self.cookies:
-            print(f"{cr}获取serviceToken失败.{cres}")
+            print(f"{cr}获取serviceToken失败.（需要验证码验证）{cres}")
             return False
         
         self.auth_info = {
@@ -219,7 +214,7 @@ class XiaomiUnlockTool:
         }
         self.save_data(self.auth_info)
         
-        print(f"\n{cg}DONE！登录成功!{cres}")
+        print(f"\n{cg}Done Login！登录成功!{cres}")
         print(f"{cg}账户信息:{cres}\nID: {userId}")
         
         return True
@@ -234,19 +229,19 @@ class XiaomiUnlockTool:
             print(f"{cr}十六进制转换失败: {e}{cres}")
             return None
     
-    def save_token_bin(self, encrypt_data):
+    def save_sig_bin(self, encrypt_data):
         try:
             hex_string = encrypt_data.strip()
             
             binary_data = bytes.fromhex(hex_string)
             
             script_dir = os.path.dirname(os.path.abspath(__file__))
-            token_file = os.path.join(script_dir, "token.bin")
+            sig_file = os.path.join(script_dir, "sig.bin")
             
-            with open(token_file, 'wb') as f:
+            with open(sig_file, 'wb') as f:
                 f.write(binary_data)
             
-            print(f"{cg}解锁码已保存为: {token_file}{cres}")
+            print(f"{cg}文件已保存在: {sig_file}{cres}")
             return True
         except Exception as e:
             print(f"{cr}保存token.bin文件失败: {e}{cres}")
@@ -301,7 +296,7 @@ class XiaomiUnlockTool:
         return self.request_unlock_service(passToken, userId, deviceId)
     
     def authenticate_with_passtoken(self):
-        """使用passtoken进行认证"""
+        """使用passtoken和userid进行认证"""
         print(f"\n{cy}使用passtoken登录{cres}")
         
         print(f"{cb}步骤1: 获取passtoken{cres}")
@@ -418,7 +413,6 @@ class XiaomiUnlockTool:
                     post_data[k.decode('utf-8')] = v.decode('utf-8')
                 
                 url = f"https://{self.unlock_api.current_host}{self.path}"
-                print(f"{cy}发送请求到: {url}{cres}")
                 
                 response = self.unlock_api.session.post(
                     url, 
@@ -427,9 +421,7 @@ class XiaomiUnlockTool:
                     cookies=self.unlock_api.cookies,
                     timeout=30
                 )
-                
-                print(f"{cy}收到响应，状态码: {response.status_code}{cres}")
-                
+                                
                 if not response.text.strip():
                     return {"error": "服务器返回空响应"}
                 
@@ -482,7 +474,8 @@ class XiaomiUnlockTool:
         return result
     
     def request_unlock(self, product, token,):
-        print(f"\n{cy}请求解锁码...{cres}")
+        print(f"\n{cy}开始加密请求...{cres}")
+        print(f"\n{cy}开始请求流程...{cres}")
         
         userId = self.auth_info.get("userid")
         
@@ -552,15 +545,15 @@ class XiaomiUnlockTool:
             input(f"\n{cy}按 Enter 检查设备状态...{cres}")
             self.check_device_status(product)
             
-            input(f"\n{cy}按 Enter 请求解锁码...{cres}")
+            input(f"\n{cy}按 Enter 开始请求流程...{cres}")
             
             result = self.request_unlock(product, device_token)
             
             if not result:
                 print(f"{cr}解锁请求失败 - 无响应{cres}")
                 return
-                
-            print(f"\n{cy}服务器响应:{cres}")
+
+            print(f"\n{cy}服务器返回响应:{cres}")
             print(json.dumps(result, indent=2, ensure_ascii=False))
             
             if "code" in result and result["code"] == 0:
@@ -572,13 +565,13 @@ class XiaomiUnlockTool:
                     print(f"{cy}{encrypt_data}{cres}")
                     print(f"{cb}{'='*50}{cres}")
                     
-                    print(f"{cy}正在生成token.bin文件...{cres}")
-                    if self.save_token_bin(encrypt_data):
-                        print(f"{cg}token.bin文件生成成功!{cres}")
+                    print(f"{cy}正在生成sig.bin文件...{cres}")
+                    if self.save_sig_bin(encrypt_data):
+                        print(f"{cg}sig.bin文件生成成功!{cres}")
                     else:
-                        print(f"{cr}token.bin文件生成失败{cres}")
+                        print(f"{cr}sig.bin文件生成失败{cres}")
                     
-                    print(f"\n{cy}请使用此解锁码在fastboot模式下解锁设备{cres}")
+                    print(f"\n{cy}请使用此解锁码或解锁文件在fastboot模式下解锁设备{cres}")
                 else:
                     print(f"{cr}响应中缺少有效的解锁数据{cres}")
                     
