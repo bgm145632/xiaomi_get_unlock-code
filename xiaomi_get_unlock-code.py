@@ -518,7 +518,7 @@ class XiaomiUnlockTool:
         print(f"{cb}作者                          BEICHEN，bgm145632{cres}")
         print(f"{cb}参考项目                       termux-miunlock{cres}")
         print(f"                                         {cres}")
-        print(f"{cb}风破浪会有时 直挂云帆济沧海{cres}")
+        print(f"{cb}长风破浪会有时 直挂云帆济沧海{cres}")
         print(f"{cg}{'='*70}{cres}")
         
         try:
@@ -553,6 +553,7 @@ class XiaomiUnlockTool:
                 print(f"{cr}解锁请求失败 - 无响应{cres}")
                 return
 
+            print(f"\n{cr}请求解锁解开成功！！！已收到返回响应{cres}")
             print(f"\n{cy}服务器返回响应:{cres}")
             print(json.dumps(result, indent=2, ensure_ascii=False))
             
