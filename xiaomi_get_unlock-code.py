@@ -464,7 +464,7 @@ class XiaomiUnlockTool:
             if cleanOrNot == 1:
                 print(f"{cr}解锁此设备将清除用户数据{cres}")
             elif cleanOrNot == -1:
-                print(f"{cr}未锁定的设备容易遭到恶意软件的攻击的目标，这可能损坏设备或造成相关损失！！！{cres}") //这里使用响应返回中的英文翻译,原提示该设备解锁不清除用户数据
+                print(f"{cr}未锁定的设备容易遭到恶意软件的攻击的目标，这可能损坏设备或造成相关损失！！！{cres}") #这里使用响应返回中的英文翻译,原提示该设备解锁不清除用户数据
             
             if 'notice' in result:
                 print(f"{cb}提示: {result['notice']}{cres}")
